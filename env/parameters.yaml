@@ -1,0 +1,12 @@
+adminUser:
+  password: vault:choppercold/adminUser:password
+  username: admin
+dashboardUrl: https://dashboard.play-jxaas.live
+enableDocker: false
+pipelineUser:
+  email: arcalos-admin@googlegroups.com
+  token: vault:choppercold/pipelineUser:token
+  username: cloudbees-ci-cd-play[bot]
+prow:
+  hmacToken: vault:choppercold/prow:hmacToken
+segmentWriteKey: vault:choppercold:segmentWriteKey

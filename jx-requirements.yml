@@ -1,40 +1,105 @@
 autoUpdate:
   enabled: true
-  schedule: '0 0 * * *'
+  schedule: 0 0 * * *
+bootConfigURL: https://github.com/cloudbees/arcalos-boot-config.git
 cluster:
-  clusterName: ""
-  environmentGitOwner: ""
-  project: ""
+  azure: {}
+  chartRepository: http://bucketrepo/bucketrepo/charts/
+  clusterName: choppercold
+  environmentGitOwner: CorinneOrg
+  environmentGitPublic: true
+  externalDNSSAName: choppercold-dn
+  gitKind: github
+  gitName: github
+  gitPublic: true
+  gitServer: https://github.com
+  gke:
+    projectNumber: "1062266988561"
+  kanikoSAName: choppercold-ko
+  namespace: jx
+  project: cbjx-choppercold
   provider: gke
-  zone: ""
-gitops: true
-githubApp:
-  enabled: false
-  url: ""
-  schedule: '0 0 * * *'
+  registry: gcr.io
+  vaultName: choppercold
+  vaultSAName: choppercold-vt
+  zone: us-central1-c
 environments:
-- key: dev
-- key: staging
-- key: production
+- ingress:
+    cloud_dns_secret_name: external-dns-gcp-sa
+    domain: cbjx-choppercold.play-jxaas.live
+    domainIssuerURL: https://jx-tenant-service-jx.mgmt.play-jxaas.live
+    externalDNS: true
+    namespaceSubDomain: -jx.
+    tls:
+      email: jenkins-x@cloudbees.com
+      enabled: true
+      production: false
+  key: dev
+  repository: environment-choppercold-dev
+- ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: staging
+  repository: environment-choppercold-staging
+- ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: production
+  repository: environment-choppercold-production
+githubApp:
+  enabled: true
+  schedule: 0 0 * * *
+  url: https://lighthouse-githubapp-jx.mgmt.play-jxaas.live
+gitops: true
 ingress:
-  domain: ""
+  cloud_dns_secret_name: external-dns-gcp-sa
+  domain: cbjx-choppercold.play-jxaas.live
+  domainIssuerURL: https://jx-tenant-service-jx.mgmt.play-jxaas.live
   externalDNS: true
+  namespaceSubDomain: -jx.
   tls:
     email: jenkins-x@cloudbees.com
     enabled: true
     production: false
 kaniko: true
+repository: bucketrepo
 secretStorage: vault
 storage:
+  backup:
+    enabled: true
+    url: gs://cbjx-choppercold-backup
   logs:
-    enabled: false
-    url: ""
+    enabled: true
+    url: gs://cbjx-choppercold-lts
   reports:
     enabled: false
     url: ""
   repository:
-    enabled: false
-    url: ""
+    enabled: true
+    url: gs://cbjx-choppercold-repository
+vault:
+  aws: {}
+  bucket: cbjx-choppercold-vault
+  key: choppercold-4047ecb6062a-crypto-key
+  keyring: choppercold-4047ecb6062a-keyring
+  name: choppercold
+  serviceAccount: choppercold-vt
 velero:
   namespace: velero
-webhook: prow
+  schedule: ""
+  serviceAccount: choppercold-vo
+  ttl: ""
+versionStream:
+  ref: v0.0.435
+  url: https://github.com/cloudbees/arcalos-jenkins-x-versions.git
+webhook: lighthouse
