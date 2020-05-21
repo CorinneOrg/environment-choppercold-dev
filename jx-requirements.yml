@@ -100,6 +100,6 @@ velero:
   serviceAccount: choppercold-vo
   ttl: ""
 versionStream:
-  ref: v0.0.442
+  ref: v0.0.445
   url: https://github.com/cloudbees/arcalos-jenkins-x-versions.git
 webhook: lighthouse
